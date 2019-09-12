@@ -1,11 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
 <meta charset="utf-8">
-<title>Insert title here</title>
+<title>Produits</title>
+<!-- thymleaf ignore href -->
+
+<!-- <link rel="stylesheet" type="text/css"
+	href="../static/css/bootstrap.css" th:href="@{css/bootstrap.css}">
+<link rel="stylesheet" type="text/css" href="../static/css/style.css"
+	th:href="@{css/style.css}"> -->
 </head>
 <body>
-
-<h2> hi there </h2>
+	<div layout:fragment="content">
+	 new home
+	 <a th:href="@{/logout}">logout</a> 
+	</div>
 </body>
 </html>
