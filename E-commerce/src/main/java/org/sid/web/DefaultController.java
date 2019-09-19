@@ -1,5 +1,7 @@
 package org.sid.web;
 
+import javax.validation.Valid;
+
 import org.sid.entites.User;
 import org.sid.service.IUserService;
 import org.sid.validation.EmailExistsException;
@@ -51,19 +53,24 @@ public class DefaultController {
 	 */
 	@RequestMapping(value="/registration",method=RequestMethod.POST)
 	public ModelAndView registerAccount(
-			@ModelAttribute("user") UserDto accountDto,
+			@ModelAttribute("user") @Valid UserDto accountDto,
 			BindingResult result,
 			WebRequest request,
 			Errors errors
-			) {
+			) {		
 		User registred = new User();
+		// System.out.println(accountDto.getEmail());
+		// System.out.println(result);
 		if( !result.hasErrors() ) {
+			System.out.println(" no errors ");
 			registred = createUserAccount(accountDto, result);
 		} 
 		if ( registred == null ) {
-			result.rejectValue("email", "message.regError");
+			System.out.println(" registred was null ");
+			result.rejectValue("email", "message.regError"); // 
 		}
 		if( result.hasErrors() ) {
+			System.out.println(" has errors ");
 			return new ModelAndView("registration","user",accountDto);
 		}
 		else {

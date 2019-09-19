@@ -32,7 +32,7 @@
 			</div>
 			<div>
 				<!-- <label th:text="#{label.user.email}">email</label> -->
-				<label  >email</label>
+				<label> email </label>
 				<input type="email" th:field="*{email}" />
 				<p th:each="error : ${#fields.errors('email')}" th:text="${error}">Validation
 					error</p>

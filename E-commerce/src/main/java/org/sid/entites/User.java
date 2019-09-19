@@ -2,11 +2,13 @@ package org.sid.entites;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +26,31 @@ public class User implements Serializable, UserDetails {
 	private String password;
 	
 	private String email;
+	
+	@OneToMany(mappedBy = "user") // , fetch = FetchType.LAZY
+	private List<UserSession> userSessions;	
+	//private Collection <UserSession> userSession;
+	
+	public List<UserSession> getUserSessions() {
+		return userSessions;
+	}
+
+	public void setUserSessions(List<UserSession> userSessions) {
+		this.userSessions = userSessions;
+	}
+
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+
+	@OneToMany(mappedBy = "user")
+	private List<Order> orders;
+	
+	
 
 	public String getEmail() {
 		return email;

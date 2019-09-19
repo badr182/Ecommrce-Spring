@@ -3,6 +3,11 @@ package org.sid.web.dto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import org.sid.validation.PasswordMatches;
+import org.sid.validation.ValidEmail;
+
+
+@PasswordMatches
 public class UserDto {
 
 	@NotNull
@@ -12,12 +17,14 @@ public class UserDto {
 	@NotNull
 	@NotEmpty
 	private String lastName;
+	
 
 	@NotNull
 	@NotEmpty
 	private String password;
 	private String matchingPassword;
 
+	@ValidEmail
 	@NotNull
 	@NotEmpty
 	private String email;
