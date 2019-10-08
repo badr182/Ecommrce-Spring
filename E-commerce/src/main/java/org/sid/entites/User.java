@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -25,8 +28,37 @@ public class User implements Serializable, UserDetails {
 	
 	private String password;
 	
+	public Collection<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Collection<Role> roles) {
+		this.roles = roles;
+	}
+
 	private String email;
 	
+	private boolean active;
+	
+	// private boolean tokenExpired;
+	@ManyToMany
+	@JoinTable(
+			name ="users_roles",
+			joinColumns = @JoinColumn(
+					name="user_id", referencedColumnName = "userId"),
+			inverseJoinColumns = @JoinColumn(
+					name = "role_id", referencedColumnName = "id")) //		
+	private Collection<Role> roles;
+	
+	
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	@OneToMany(mappedBy = "user") // , fetch = FetchType.LAZY
 	private List<UserSession> userSessions;	
 	//private Collection <UserSession> userSession;

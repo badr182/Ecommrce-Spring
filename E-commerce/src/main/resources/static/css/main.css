@@ -7,6 +7,18 @@
 /* Wide Mobile Layout: 480px */
 /* Section Gaps css
 ============================================================================================ */
+
+/* Start Style by badr akkar */
+p.errors {
+	color : red ;
+	font-size : 0.8em ;
+	margin:  0px;
+	padding: 0px;
+}
+
+/* End Style */
+
+
 .no-padding {
   padding: 0; }
 

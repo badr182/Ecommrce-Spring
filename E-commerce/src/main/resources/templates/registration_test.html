@@ -16,32 +16,28 @@
 
 		<h1>form</h1>
 		<form  th:action="@{/registration}" th:object="${user}" method="POST" enctype="utf8">
-			<div>
-				<!-- <label th:text="#{label.user.firstName}">first</label> -->
-				<label >first name</label>
-				<input th:field="*{firstName}" />
-				<p th:each="error: ${#fields.errors('firstName')}"
-					th:text="${error}">Validation error</p>
-			</div>
+		
 			<div>
 				<!-- <label th:text="#{label.user.lastName}">last</label> -->
-				<label>last</label> 
-				<input th:field="*{lastName}" />
-				<p th:each="error : ${#fields.errors('lastName')}"
+				<label>UserName</label> 
+				<input th:field="*{userName}" />
+				<p th:each="error : ${#fields.errors('userName')}"
 					th:text="${error}">Validation error</p>
 			</div>
 			<div>
 				<!-- <label th:text="#{label.user.email}">email</label> -->
 				<label> email </label>
 				<input type="email" th:field="*{email}" />
+				<!-- <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name Error</td> -->
 				<p th:each="error : ${#fields.errors('email')}" th:text="${error}">Validation
 					error</p>
 			</div>
-			<div>
+			<div>			                
 				<label>password</label>
 				<input type="password" th:field="*{password}" />
+				<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</td>
 				<p th:each="error : ${#fields.errors('password')}"
-					th:text="${error}">Validation error</p>
+					th:text='${error}'>Validation error</p>
 			</div>
 			<div>
 				<label>confirm</label>

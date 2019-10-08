@@ -8,15 +8,15 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-// PasswordMatches
-@Target({ElementType.TYPE,ElementType.ANNOTATION_TYPE}) // , ElementType.FIELD ,ElementType.ANNOTATION_TYPE
+
+@Target( {ElementType.TYPE,ElementType.FIELD,ElementType.ANNOTATION_TYPE} ) //,ElementType.ANNOTATION_TYPE
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = PasswordMatchesValidator.class)
+@Constraint(validatedBy = UniqueEmailValidator.class)
 @Documented 
-public @interface PasswordMatches {
+public @interface UniqueEmail {
 	
-	String message() default  "{errors.user.password}";
+	String message() default "Email already exist ";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
-
+	
 }

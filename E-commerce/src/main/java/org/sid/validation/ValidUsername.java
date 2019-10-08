@@ -8,15 +8,18 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-// PasswordMatches
-@Target({ElementType.TYPE,ElementType.ANNOTATION_TYPE}) // , ElementType.FIELD ,ElementType.ANNOTATION_TYPE
+
+import org.sid.validation.EmailValidator;
+
+// 
+@Target( {ElementType.TYPE,ElementType.FIELD,ElementType.ANNOTATION_TYPE} ) //,ElementType.ANNOTATION_TYPE
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = PasswordMatchesValidator.class)
+@Constraint(validatedBy = UserNameValidator.class)
 @Documented 
-public @interface PasswordMatches {
+public @interface ValidUsername {
 	
-	String message() default  "{errors.user.password}";
+	String message() default "Invalid Username";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
-
+	
 }

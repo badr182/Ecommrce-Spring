@@ -75,73 +75,13 @@ public class DefaultController {
 		
 		return "cart";
 	}
-
-	/**
-	 * System auth change controller
-	 * 
-	 *  
-	 */
-	@RequestMapping(value="/login")
-	public String login() {
-		return "login";
-	}
+	
 	
 	@RequestMapping(value="/logout")
 	public String logout() {
 		return "redirect:/home";
 	}
 	
-	@RequestMapping(value="/registration", method=RequestMethod.GET)
-	public String register(Model model) {
-		//User user = new User();
-		UserDto user = new UserDto();
-		model.addAttribute("user", user);
-		return "registration";
-	}
-	
-	/*
-	 * Persisting data 
-	 * 
-	 */
-	@RequestMapping(value="/registration",method=RequestMethod.POST)
-	public ModelAndView registerAccount(
-			@ModelAttribute("user") @Valid UserDto accountDto,
-			BindingResult result,
-			WebRequest request,
-			Errors errors
-			) {		
-		User registred = new User();
-		// System.out.println(accountDto.getEmail());
-		// System.out.println(result);
-		if( !result.hasErrors() ) {
-			System.out.println(" no errors ");
-			registred = createUserAccount(accountDto, result);
-		} 
-		if ( registred == null ) {
-			System.out.println(" registred was null ");
-			result.rejectValue("email", "message.regError"); // 
-		}
-		if( result.hasErrors() ) {
-			System.out.println(" has errors ");
-			return new ModelAndView("registration","user",accountDto);
-		}
-		else {
-			return new ModelAndView("successRegister","user",accountDto);
-		}
-		
-					
-	}
-	
-	private User createUserAccount(UserDto accountDto, BindingResult result) {
-		User registred = null ;
-		try {
-			registred = service.registerNewAccount( accountDto );			
-		}catch(EmailExistsException e){
-			return null ;
-		}
-		
-		return registred ;
-	}
 	
 	
 }

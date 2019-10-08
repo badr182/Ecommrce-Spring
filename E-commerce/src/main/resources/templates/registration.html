@@ -67,47 +67,60 @@
 <!-- 					</div> -->
 					<div class="col-lg-6 offset-lg-3">
 						<div class="login_form_inner">
-							<h3>LOG IN</h3>
-							
-							<p th:if="${param.error}" class="error" > Invalid username and password </p>
+							<h3>CREATE AN ACCOUNT</h3>
 
-							<form th:action="@{/login}" 
+							<form th:action="@{/registration}" th:object="${user}"
 								method="POST" class="row login_form" id="contactForm"
 								novalidate="novalidate">
 
 								<div class="col-md-12 form-group">
 									<input type="text" class="form-control" id="name"
-										name="username" placeholder="Username"
+										th:field="*{userName}" placeholder="Username"
 										onfocus="this.placeholder = ''"
 										onblur="this.placeholder = 'Username'">
 
-<!-- 									<div class="float-left"> -->
-<!-- 										<p class="errors" -->
-<!-- 											th:each="error : ${#fields.errors('userName')}" -->
-<!-- 											th:text="${error}">Validation error</p> -->
-<!-- 									</div> -->
-									
+									<div class="float-left">
+
+										<p class="errors"
+											th:each="error : ${#fields.errors('userName')}"
+											th:text="${error}">Validation error</p>
+									</div>
+								</div>
+
+								<div class="col-md-12 form-group">
+									<input type="text" class="form-control" id="name"
+										th:field="*{email}" placeholder="Email"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = 'Email'">
+
+									<div class="float-left">
+										<p class="errors" th:each="error : ${#fields.errors('email')}"
+											th:text="${error}">Validation error</p>
+									</div>
 								</div>
 
 
 								<div class="col-md-12 form-group">
 									<input type="password" class="form-control" id="name"
-										name="password" placeholder="Password"
+										th:field="*{password}" name="password" placeholder="Password"
 										onfocus="this.placeholder = ''"
 										onblur="this.placeholder = 'Password'">
 
-<!-- 									<div class="float-left"> -->
-<!-- 										<p class="errors" -->
-<!-- 											th:each="error : ${#fields.errors('password')}" -->
-<!-- 											th:text="${error}">Validation error</p> -->
-<!-- 									</div> -->
+									<div class="float-left">
+										<p class="errors"
+											th:each="error : ${#fields.errors('password')}"
+											th:text="${error}">Validation error</p>
+									</div>
 
 								</div>
 
 
 								<div class="col-md-12 form-group">
 									<div class="creat_account">
-										<!-- 										<input type="checkbox" id="f-option2" name="selector"> -->										
+										<!-- 										<input type="checkbox" id="f-option2" name="selector"> -->
+										<label for="f-option2">By clicking “Sign up”, you
+											agree to our Terms of Service and Privacy Statement. We’ll
+											occasionally send you account related emails</label>
 									</div>
 								</div>
 								<div class="col-md-12 form-group">

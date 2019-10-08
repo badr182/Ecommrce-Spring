@@ -1,5 +1,7 @@
 package org.sid.sec;
 
+import org.sid.service.UserPrincipalDetailsService;
+
 //import org.sid.service.AppAuthProvider;
 //import org.sid.service.UserService;
 //import org.sid.sec.AuthentificationLogoutSuccessHandler;
@@ -9,6 +11,7 @@ package org.sid.sec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 // import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -31,16 +34,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	// @Autowired
 	// private AccessDeniedHandler accessDeniedHandler;
+	
+	private UserPrincipalDetailsService userPrincipalDetailsService;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		
+		auth.authenticationProvider( authenticationProvider() );		
 		// auth.userDetailsService(userDetailsService);		
-        auth.inMemoryAuthentication()
-        .withUser("badr").password( passwordEncoder().encode("badr") ).roles("USER");
-        /*.and()
-        .withUser("badrUser2").password( passwordEncoder().encode("badr") ).roles("USER")
-        .and()
-        .withUser("badradmin").password( passwordEncoder().encode("badr") ).roles("ADMIN");*/
+//		auth.jdbcAuthentication()
+//		.dataSource(dataSource)
+//		.usersByUsernameQuery("select username as principal, password as credentials, active from users where username=?")
+//		.authoritiesByUsernameQuery("select username as pricipal, roles as role from roles_usres where username=?")
+//		.rolePrefix("ROLE_")
+//		.passwordEncoder(  new BCryptPasswordEncoder() ); // utiliser md5 
+		
 	}
 
 	@Override
@@ -69,7 +77,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.csrf().disable();		
 		http.authorizeRequests().antMatchers("/home").hasRole("USER");
-		http.formLogin().loginPage("/login");
+		
+		http
+			.formLogin()
+			.loginPage("/login")
+			.permitAll();
+		
 		http.logout().logoutUrl("/logout");
 		
 //		  http
@@ -99,6 +112,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //    public AuthenticationFailureHandler authenticationFailureHandler() {
 //        return new CustomAuthenticationFailureHandler();
 //    }
+	
+	@Bean 
+    DaoAuthenticationProvider authenticationProvider(){
+		
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        daoAuthenticationProvider.setUserDetailsService(this.userPrincipalDetailsService);
+
+        return daoAuthenticationProvider;
+    }
     
 	@Bean
     public PasswordEncoder passwordEncoder() {
